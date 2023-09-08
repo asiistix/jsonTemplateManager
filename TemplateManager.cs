@@ -38,7 +38,7 @@ public class TemplateManager : EditorWindow
 
             for (int i = 0; i < templates.Count; i++)
             {
-                templateNames[i] = templates[i].name.text;
+                templateNames[i] = templates[i].name;
             }
 
             selectedTemplateIndex = EditorGUILayout.Popup(selectedTemplateIndex, templateNames);
@@ -48,7 +48,7 @@ public class TemplateManager : EditorWindow
             {
                 TemplateData selectedTemplate = templates[selectedTemplateIndex];
 
-                selectedTemplate.name.text = EditorGUILayout.TextField("Name", selectedTemplate.name.text);
+                selectedTemplate.name = EditorGUILayout.TextField("Name", selectedTemplate.name);
                 selectedTemplate.position = EditorGUILayout.Vector2Field("Position", selectedTemplate.position);
                 selectedTemplate.rotation = EditorGUILayout.FloatField("Rotation", selectedTemplate.rotation);
                 selectedTemplate.scale = EditorGUILayout.Vector2Field("Scale", selectedTemplate.scale);
@@ -75,7 +75,7 @@ public class TemplateManager : EditorWindow
     private void CreateNewTemplate()
     {
         TemplateData newTemplate = new TemplateData();
-        newTemplate.name.text = "New Template";
+        newTemplate.name = "New Template";
         templates.Add(newTemplate);
         selectedTemplateIndex = templates.Count - 1;
     }
@@ -94,7 +94,7 @@ public class TemplateManager : EditorWindow
             canvasObj.AddComponent<GraphicRaycaster>();
 
             //ui object based on the selected template
-            GameObject uiObj= new GameObject(selectedTemplate.name.text);
+            GameObject uiObj= new GameObject(selectedTemplate.name);
             uiObj.transform.SetParent(canvas.transform, false);
             uiObj.transform.localPosition = new Vector3(selectedTemplate.position.x, selectedTemplate.position.y, 0f);
             uiObj.transform.localRotation = Quaternion.Euler(0, 0, selectedTemplate.rotation);
@@ -150,7 +150,7 @@ public class TemplateList
 [System.Serializable]
 public class TemplateData
 {
-    public TMP_Text name;
+    public string name;
     public Vector2 position;
     public float rotation;
     public Vector2 scale;
